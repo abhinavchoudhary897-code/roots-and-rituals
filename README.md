@@ -3,7 +3,7 @@
 **CA1 project:** Tribal Artisan Cultural Preservation and Fair Trade Exhibition System  
 **Project ID:** K3P26EP–14
 
-Roots & Rituals is a frontend exhibition about Indian tribal art. The idea is to help visitors understand the artwork, the people who make it, and the importance of fair compensation for handmade craft.
+Roots & Rituals is a frontend web application designed to promote Indian tribal art, cultural preservation and fair-trade awareness. It brings together educational exhibits, artisan profiles and interactive features to help visitors understand traditional craftsmanship and the importance of fair compensation.
 
 ## Run the website
 
