@@ -6,15 +6,11 @@ The assignment scope is defined in official-requirements.md. The latest code add
 - 6 JavaScript/CJS source files parsed successfully in the script environment.
 - 54 static HTML IDs, 0 duplicates; 0 missing direct JS ID references; 0 missing internal anchor destinations.
 - Five required category data records each contain a story, symbolism, lineage field and media reference.
-- Browser test and audio build scripts exist; no successful run was confirmed. GitHub commit status returned no checks and the workflow run lookup returned no runs (lookup limited to pull-request-triggered workflows). These do not prove that the push workflow failed or succeeded.
-- Expected Pages URL https://abhinavchoudhary897-code.github.io/roots-and-rituals/ was inaccessible in the research browser. Deployment is not verified.
+- GitHub Actions workflow #5: the verify job succeeded in 1m 18s; the screenshots show successful synthetic audio generation, JavaScript validation, browser acceptance tests and artifact upload. The deploy job succeeded in 17s. One annotation warning was visible but its details have not been inspected.
+- Published address: https://abhinavchoudhary897-code.github.io/roots-and-rituals/ . Direct public URL and live media playback have not been independently verified.
 
-## Remaining release blockers
-1. Enable GitHub Pages in repository Settings > Pages > Build and deployment > Source: GitHub Actions (if not enabled). Run the workflow in Actions and inspect actual verification/deployment logs. The available repository connector does not configure Pages settings.
-2. Confirm cleared, usable high-resolution images with individual artwork provenance, certification if available, and exact artwork-to-story associations. The current generic reference images and contextual records are not fully compliant with the certified-masterpiece requirement. Do not fabricate proof.
-3. Verify actual audio files and browser playback. The workflow is designed to generate synthetic recordings; it has not been confirmed to complete. A community recording would require appropriate consent/rights.
-4. Run the browser suite, manual keyboard/accessibility and remote asset checks on a real browser; fix failures. Fixture-based browser tests test mechanics, not actual image validity. Verify actual map, chart and Three.js with external networks allowed.
-5. Review and align final Figma frames; document actual student contributions and source review.
-6. Team members record a genuine demonstration video; obtain working video link, course code, team name and all registration numbers. Fill the university Excel; do not submit incomplete data.
+## Outstanding technical checks
 
-Demo and viva guidance: demo-and-viva.md. No UMS submission performed.
+- Confirm cleared high-resolution images, individual artwork provenance and certification where available, and exact artwork-to-story associations. Current contextual references are not full evidence of the certified-masterpiece requirement.
+- Check audio playback, image loading, keyboard navigation and accessibility on the deployed website. Fixture-based browser tests validate interaction mechanics, not remote image authenticity. Test optional map, chart and 3D rendering with external networks enabled.
+- Review the workflow warning and align the final design with the implementation.
