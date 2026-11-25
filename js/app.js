@@ -106,9 +106,7 @@ const featured=heritage.warli;
 $("story-text").textContent=featured.story+" "+featured.symbolism;
 for(const x of exhibits){const card=add(make("article",undefined,"card"),make("p",x.category,"eyebrow"),make("h3",heritage[x.id].storyTitle),make("p",heritage[x.id].storyType),button("Open story and artwork",()=>openDetail(x)));$("story-library").append(card)}
 const featuredPlayer=storyPlayer(featured);
-const oldFeatured=$("speak").closest("article");
-oldFeatured.replaceChildren(...featuredPlayer.childNodes);
-$("pause-speech")?.remove();$("stop-speech")?.remove();
+$("featured-player").replaceChildren(featuredPlayer);
 // Timeline and profiles.
 function renderTimeline(){const year=$("timeline-filter").value;$("timeline").replaceChildren(...milestones.filter(x=>year==="all"||String(x.year)===year).map(x=>{const date=make("time",String(x.year));date.dateTime=String(x.year);return add(make("li"),date,make("h3",x.title),make("p",x.body),link("Read source",x.url))}))}
 $("timeline-filter").addEventListener("change",renderTimeline);renderTimeline();
