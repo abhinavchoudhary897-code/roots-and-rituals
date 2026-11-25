@@ -1,0 +1,9 @@
+# Implementation baseline — 25 November 2026
+
+Files: index.html, css/styles.css, data/exhibits.js, js/app.js. The site now contains responsive HTML sections, search and filters, exhibit detail dialog, opt-in Three.js scene, Leaflet map, browser speech narration, filterable timeline, SVG educational diagrams and adjustable price calculator with Chart.js enhancement. Original editorial vectors are not authentic artisan artwork. Audio uses Web Speech rather than WaveSurfer because no rights-cleared recording is present; waveform and genuine recording remain pending. External CDN and tile access must be tested. No backend or payment functionality.
+
+## Coordinate evidence
+Selected regional references, not precise artisan locations: Dahanu 19.9678,72.7126 (GeoNames); Mandla district 22.6404,80.5134 (GeoNames district centroid, not Patangarh); Jagdalpur 19.0814,82.0213 (https://www.geodatos.net/en/coordinates/india/jagdalpur); Hazaribagh 23.9951,85.3611 (Getty TGN https://www.getty.edu/vow/TGNFullDisplay?english=N&find=indian&nation=&place=ocean&subjectid=1075474); Chhota Udepur 22.3040,74.0158 (https://latitudelongitude.org/in/chhota-udepur/). GeoNames district and town references: https://www.geonames.org/1263853/mandla.html and https://www.geonames.org/advanced-search.html?q=Indien&startRow=1400 .
+
+## Actual static checks
+Both JavaScript files parsed successfully. 40 literal JavaScript ID references checked against HTML; 0 missing. These checks do not demonstrate browser functionality. Test keyboard, phone widths, modal, filters, gallery start/stop, maps and fallback, speech, timeline, motifs, price input edge cases, source links and CDN failure in a real browser. Deployment and real user testing not yet performed. AI-generated code requires genuine student review, understanding and contribution.
