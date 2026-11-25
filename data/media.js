@@ -1,15 +1,14 @@
-/* Wikimedia Commons source-record licences; underlying artwork rights and cultural context are separate. */
+/* Reference photographs: file credits and licences are separate from underlying artwork rights. */
 window.EXHIBIT_MEDIA = {
   "warli": {
     "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Warli_art_-_acrylic_painting_on_canvas.jpg/960px-Warli_art_-_acrylic_painting_on_canvas.jpg",
     "original": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Warli_art_-_acrylic_painting_on_canvas.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Warli_art_-_acrylic_painting_on_canvas.jpg",
-    "local": "assets/images/warli-cc0.jpg",
     "credit": "PVRMurty1944",
     "license": "CC0 1.0",
     "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
     "alt": "Warli-style acrylic painting on canvas",
-    "note": "Own-work CC0 upload; creator's community affiliation is not stated. May be used as a contextual Warli-style example, not an identified artisan work."
+    "note": "Own-work CC0 upload; creator's community affiliation is not stated. May be used as a contextual Warli-style example, not an identified artisan work. Original file: 3,108 × 3,220 pixels."
   },
   "gond": {
     "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Gond_art_of_India_MG_8704.jpg/500px-Gond_art_of_India_MG_8704.jpg",
@@ -32,14 +31,14 @@ window.EXHIBIT_MEDIA = {
     "note": "Craft maker not identified in the file record."
   },
   "sohrai": {
-    "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Sohrai_wall_painting_jharkhand_India.jpg/960px-Sohrai_wall_painting_jharkhand_India.jpg",
-    "original": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Sohrai_wall_painting_jharkhand_India.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Sohrai_wall_painting_jharkhand_India.jpg",
-    "credit": "Shreyashprashu",
-    "license": "CC BY-SA 4.0",
-    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "alt": "Earth-toned Sohrai murals featuring animals, plants and patterns",
-    "note": "The mural maker and community are not identified in the file record."
+    "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Jadupatua_painting.jpg/500px-Jadupatua_painting.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/6/63/Jadupatua_painting.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Jadupatua_painting.jpg",
+    "credit": "Rohini",
+    "license": "CC BY-SA 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "alt": "Framed Jadupatua painting of stylised colourful birds",
+    "note": "Photographed reference, 3,096 × 4,043 pixels in the source record. The maker and depicted narrative are not identified; this is not the Cambridge scroll. The file licence does not establish underlying artwork clearance."
   },
   "pithora": {
     "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Pithora_wall_painting.JPG/960px-Pithora_wall_painting.JPG",
