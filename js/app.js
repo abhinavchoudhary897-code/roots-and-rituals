@@ -25,11 +25,30 @@ const heroArt=$("hero-illustration");
 if(heroArt&&media.sohrai){const hero=artwork(exhibits.find(x=>x.id==="sohrai"),true);hero.addEventListener("reference-ready",()=>{if(heroArt.isConnected)heroArt.replaceWith(hero)},{once:true});}
 
 const menu=$("menu");menu.addEventListener("click",()=>{const open=$("navigation").classList.toggle("open");menu.setAttribute("aria-expanded",String(open))});$("navigation").addEventListener("click",e=>{if(e.target.closest("a")){$("navigation").classList.remove("open");menu.setAttribute("aria-expanded","false")}});
+// Artwork inspection: original file resolution is requested explicitly; zoom never implies extra image detail.
+function artworkViewer(item){
+ const m=media[item.id];if(!m)return make("p","No reference image available.");
+ const panel=make("section",undefined,"artwork-viewer"),heading=make("h3","Artwork inspection");
+ const viewport=make("div",undefined,"artwork-viewport"),fig=artwork(item,true),status=make("p","Loading reference image…","status");
+ status.setAttribute("role","status");const img=fig.querySelector("img");
+ const controls=make("div",undefined,"actions"),level=make("span","100%");level.setAttribute("aria-live","polite");
+ let scale=1,room=false,originalRequested=false;
+ const sync=()=>{level.textContent=Math.round(scale*100)+"%";if(img)img.style.width=room?"100%":(scale*100)+"%";viewport.classList.toggle("room-mode",room);zoomOut.disabled=room||scale<=1;zoomIn.disabled=room||scale>=4;reset.disabled=room;};
+ const zoomIn=button("Zoom in",()=>{scale=Math.min(4,scale+.5);sync()});
+ const zoomOut=button("Zoom out",()=>{scale=Math.max(1,scale-.5);sync()});
+ const reset=button("Reset zoom",()=>{scale=1;viewport.scrollLeft=0;viewport.scrollTop=0;sync()});
+ const original=button("Load original image",()=>{if(!img?.isConnected)return;originalRequested=true;original.disabled=true;status.textContent="Loading the source file at its available resolution…";img.src=m.original});
+ const roomBtn=button("Room preview",()=>{room=!room;roomBtn.setAttribute("aria-pressed",String(room));roomBtn.textContent=room?"Exit room preview":"Room preview";scale=1;viewport.scrollLeft=0;viewport.scrollTop=0;sync();});roomBtn.setAttribute("aria-pressed","false");
+ if(img){img.addEventListener("load",()=>{status.textContent=(originalRequested?"Source image: ":"Reference image: ")+img.naturalWidth+" × "+img.naturalHeight+" pixels. Digital zoom does not increase image resolution.";});}
+ fig.addEventListener("reference-unavailable",()=>{status.textContent="Image unavailable. Open the source record to inspect the artwork.";original.disabled=true;zoomIn.disabled=true;zoomOut.disabled=true;reset.disabled=true;roomBtn.disabled=true;});
+ controls.append(zoomOut,level,zoomIn,reset,original,roomBtn);viewport.append(fig);panel.append(heading,controls,viewport,status,make("p","Room preview is an illustrative exhibition wall, not a measured representation of the artwork.", "note"),link("Open original source record",m.source));sync();return panel
+}
+
 let lastFocus=null;
-function openDetail(item){lastFocus=document.activeElement;const title=make("h2",item.name);title.id="detail-title";$("detail-content").replaceChildren(make("p",item.region,"eyebrow"),title,artwork(item),make("p",item.material),make("p",item.detail),make("h3","Artisan heritage"),make("p",item.artisan),make("p",item.profile),link(item.sourceName,item.source));$("detail").showModal();$("close-detail").focus()}
+function openDetail(item){lastFocus=document.activeElement;const title=make("h2",item.name);title.id="detail-title";$("detail-content").replaceChildren(make("p",item.region,"eyebrow"),title,artworkViewer(item),make("p",item.material),make("p",item.detail),make("h3","Artisan heritage"),make("p",item.artisan),make("p",item.profile),link(item.sourceName,item.source));$("detail").showModal();$("close-detail").focus()}
 $("close-detail").addEventListener("click",()=>$("detail").close());$("detail").addEventListener("close",()=>lastFocus?.focus());$("detail").addEventListener("click",e=>{if(e.target===$("detail"))$("detail").close()});
-function renderCollection(){const query=$("search").value.trim().toLowerCase(),type=$("filter").value;const items=exhibits.filter(x=>(type==="all"||type===x.type)&&[x.name,x.region,x.artisan,x.material,x.place].join(" ").toLowerCase().includes(query));$("exhibits").replaceChildren(...items.map(x=>{const card=make("article",undefined,"card");return add(card,artwork(x),make("p",x.region,"eyebrow"),make("h3",x.name),make("p",x.summary),button("Explore tradition",()=>openDetail(x)))}));$("results").textContent=items.length+" tradition"+(items.length===1?"":"s")+" found.";if(!items.length)$("exhibits").append(make("p","No matching exhibits. Try another search or filter."))}
-$("search").addEventListener("input",renderCollection);$("filter").addEventListener("change",renderCollection);renderCollection();
+function renderCollection(){const query=$("search").value.trim().toLowerCase(),type=$("filter").value,category=$("category-filter").value;const items=exhibits.filter(x=>(type==="all"||type===x.type)&&(category==="all"||category===x.category)&&[x.category,x.name,x.region,x.artisan,x.material,x.place].join(" ").toLowerCase().includes(query));$("exhibits").replaceChildren(...items.map(x=>{const card=make("article",undefined,"card");return add(card,artwork(x),make("p",x.category+" · "+x.region,"eyebrow"),make("h3",x.name),make("p",x.summary),button("Explore tradition",()=>openDetail(x)))}));$("results").textContent=items.length+" tradition"+(items.length===1?"":"s")+" found.";if(!items.length)$("exhibits").append(make("p","No matching exhibits. Try another search or filter."))}
+$("search").addEventListener("input",renderCollection);$("filter").addEventListener("change",renderCollection);$("category-filter").addEventListener("change",renderCollection);renderCollection();
 // 3D is explicitly opt-in; text navigation does not depend on WebGL or CDN availability.
 let current=0,viewer=null,loading=false,galleryRequest=0;
 function showGallery(){const x=exhibits[current];$("gallery-info").replaceChildren(make("p","EXHIBIT "+(current+1)+" / "+exhibits.length,"eyebrow"),make("h3",x.name),artwork(x),make("p",x.region+" · "+x.material),make("p",x.summary),button("Read exhibit details",()=>openDetail(x)));if(viewer)viewer.show(current)}
