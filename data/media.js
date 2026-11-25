@@ -4,11 +4,12 @@ window.EXHIBIT_MEDIA = {
     "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Warli_art_-_acrylic_painting_on_canvas.jpg/960px-Warli_art_-_acrylic_painting_on_canvas.jpg",
     "original": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Warli_art_-_acrylic_painting_on_canvas.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Warli_art_-_acrylic_painting_on_canvas.jpg",
+    "local": "assets/images/warli-cc0.jpg",
     "credit": "PVRMurty1944",
     "license": "CC0 1.0",
     "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
     "alt": "Warli-style acrylic painting on canvas",
-    "note": "Own-work upload; creator's community affiliation is not stated."
+    "note": "Own-work CC0 upload; creator's community affiliation is not stated. May be used as a contextual Warli-style example, not an identified artisan work."
   },
   "gond": {
     "preview": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Gond_art_of_India_MG_8704.jpg/500px-Gond_art_of_India_MG_8704.jpg",
