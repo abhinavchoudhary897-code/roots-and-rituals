@@ -11,7 +11,7 @@ Roots & Rituals is a frontend web application designed to promote Indian tribal 
 2. Open `index.html` using Live Server.
 3. Use the collection search and filters, then try the gallery, map, stories and fair-trade example.
 
-The website is built with HTML, CSS and JavaScript. Three.js powers the optional 3D display, Leaflet provides the map, and Chart.js enhances the price calculator. Each exhibit includes an educational narration player using the browser’s Web Speech API, a transcript and a related artisan profile. Recorded audio and WaveSurfer are not implemented. Artwork detail includes digital zoom, a source-resolution request and an illustrative room preview. Some features and photographs require an internet connection.
+The website is built with HTML, CSS and JavaScript. Three.js powers the optional 3D display, Leaflet provides the map, and Chart.js enhances the price calculator. Each exhibit includes an educational narration player using the browser’s Web Speech API, a transcript and a related artisan profile. The build script can generate static synthetic MP3 narration with eSpeak and FFmpeg. Native audio controls use those files when present; browser speech is the fallback. WaveSurfer is not required by the assignment and is not implemented. Artwork detail includes digital zoom, a source-resolution request and an illustrative room preview. Some features and photographs require an internet connection.
 
 ## Files
 
