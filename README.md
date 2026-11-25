@@ -11,7 +11,7 @@ Roots & Rituals is a frontend web application designed to promote Indian tribal 
 2. Open `index.html` using Live Server.
 3. Use the collection search and filters, then try the gallery, map, stories and fair-trade example.
 
-The website is built with HTML, CSS and JavaScript. Three.js powers the optional 3D display, Leaflet provides the map, and Chart.js enhances the price calculator. Narration currently uses the browser's Web Speech API; WaveSurfer is not implemented. Some features and photographs require an internet connection.
+The website is built with HTML, CSS and JavaScript. Three.js powers the optional 3D display, Leaflet provides the map, and Chart.js enhances the price calculator. Each exhibit includes an educational narration player using the browser’s Web Speech API, a transcript and a related artisan profile. Recorded audio and WaveSurfer are not implemented. Artwork detail includes digital zoom, a source-resolution request and an illustrative room preview. Some features and photographs require an internet connection.
 
 ## Files
 
@@ -19,12 +19,13 @@ The website is built with HTML, CSS and JavaScript. Three.js powers the optional
 - `css/styles.css` — layout, colours, typography and responsive styles
 - `data/exhibits.js` — exhibit descriptions and cultural references
 - `data/media.js` — image sources and licence details
+- `data/heritage.js` — institutional records, narratives, cultural symbolism and artisan profile fields
 - `js/app.js` — interactive features
 - `docs/` — research, design decisions and validation records
 
 ## Current status
 
-An implementation baseline is available, but this is not the final submission. The exact assigned statement, artwork permissions, live browser tests and public deployment still need verification. See [the pre-submission audit](docs/pre-submission-audit.md) for the correction list. The Santhal exhibit scope needs confirmation against the original assignment.
+An implementation baseline is available, but this is not the final submission. The exact assigned statement is now documented in [official requirements](docs/official-requirements.md). Individual artwork certification, image permissions and resolution, exact object-to-story correspondence, recorded narration, live browser tests and public deployment still need verification. The Santhal category includes a museum-documented Jadopatia scroll record and a separately labelled Sohrai reference. See the [pre-submission audit](docs/pre-submission-audit.md) for earlier findings.
 
 ## Sources and contributions
 
