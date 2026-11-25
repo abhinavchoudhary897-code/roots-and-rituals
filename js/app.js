@@ -13,7 +13,7 @@ function artwork(item,priority=false){
  const m=media[item.id];if(!m)return make("p","No reference photograph available.","note");
  const fig=make("figure",undefined,"exhibit-media"),img=make("img",undefined,"media-image");
  img.alt=m.alt;img.loading=priority?"eager":"lazy";img.decoding="async";
- const candidates=[m.local,m.preview,m.original].filter(u=>u&&!imageFailures.has(u));let next=0;
+ const candidates=[m.local,m.preview,m.original].filter((u,i,a)=>u&&a.indexOf(u)===i&&!imageFailures.has(u));let next=0;
  function fallback(){const box=make("div",undefined,"media-fallback");box.append(make("span","Image unavailable","eyebrow"),make("strong",item.name),link("View the original reference photograph",m.source));img.replaceWith(box);fig.dispatchEvent(new Event("reference-unavailable"))}
  function loadNext(){if(next<candidates.length)img.src=candidates[next++];else fallback()}
  img.addEventListener("error",()=>{if(img.getAttribute("src"))imageFailures.add(img.getAttribute("src"));loadNext()});
@@ -22,7 +22,7 @@ function artwork(item,priority=false){
  fig.append(img,cap);queueMicrotask(loadNext);return fig
 }
 const heroArt=$("hero-illustration");
-if(heroArt&&media.sohrai){const hero=artwork(exhibits.find(x=>x.id==="sohrai"),true);hero.addEventListener("reference-ready",()=>{if(heroArt.isConnected)heroArt.replaceWith(hero)},{once:true});}
+if(heroArt&&media.warli){const hero=artwork(exhibits.find(x=>x.id==="warli"),true);hero.addEventListener("reference-ready",()=>{if(heroArt.isConnected)heroArt.replaceWith(hero)},{once:true});}
 
 const menu=$("menu");menu.addEventListener("click",()=>{const open=$("navigation").classList.toggle("open");menu.setAttribute("aria-expanded",String(open))});$("navigation").addEventListener("click",e=>{if(e.target.closest("a")){$("navigation").classList.remove("open");menu.setAttribute("aria-expanded","false")}});
 // Artwork inspection: original file resolution is requested explicitly; zoom never implies extra image detail.
@@ -39,7 +39,7 @@ function artworkViewer(item){
  const reset=button("Reset zoom",()=>{scale=1;viewport.scrollLeft=0;viewport.scrollTop=0;sync()});
  const original=button("Load original image",()=>{if(!img?.isConnected)return;originalRequested=true;original.disabled=true;status.textContent="Loading the source file at its available resolution…";img.src=m.original});
  const roomBtn=button("Room preview",()=>{room=!room;roomBtn.setAttribute("aria-pressed",String(room));roomBtn.textContent=room?"Exit room preview":"Room preview";scale=1;viewport.scrollLeft=0;viewport.scrollTop=0;sync();});roomBtn.setAttribute("aria-pressed","false");
- if(img){img.addEventListener("load",()=>{status.textContent=(originalRequested?"Source image: ":"Reference image: ")+img.naturalWidth+" × "+img.naturalHeight+" pixels. Digital zoom does not increase image resolution.";});}
+ if(img){img.addEventListener("load",()=>{status.textContent=(originalRequested&&img.getAttribute("src")===m.original?"Original source image: ":"Reference image: ")+img.naturalWidth+" × "+img.naturalHeight+" pixels. Digital zoom does not increase image resolution.";});}
  fig.addEventListener("reference-unavailable",()=>{status.textContent="Image unavailable. Open the source record to inspect the artwork.";original.disabled=true;zoomIn.disabled=true;zoomOut.disabled=true;reset.disabled=true;roomBtn.disabled=true;});
  controls.append(zoomOut,level,zoomIn,reset,original,roomBtn);viewport.append(fig);panel.append(heading,controls,viewport,status,make("p","Room preview is an illustrative exhibition wall, not a measured representation of the artwork.", "note"),link("Open original source record",m.source));sync();return panel
 }
