@@ -1,0 +1,7 @@
+# Media resilience review
+
+All five Wikimedia Commons file-record pages opened and their declared licenses rechecked. The Sohrai thumbnail rendered; the other four thumbnail requests returned cache misses. Direct download failed DNS resolution; no local photograph binary was obtained. No assertion of complete underlying artwork or portrait clearance.
+
+Changes: preserve original editorial hero until reference image loads; responsive fallback cards with links and credits; cache failed image URLs within the session; try a local Warli image if present. The Warli source record explicitly identifies own work under CC0. An optional Three.js Warli reference texture is implemented with preserved aspect ratio, texture disposal and abstract fallback; other exhibits retain abstract geometry. The CC0 example is not attributed to Jivya Soma Mashe. Added institutional artist profile links (Fondation Cartier, IGNCA, PIB) without copying portrait photographs. The PowerShell helper scripts/fetch-cleared-media.ps1 downloads only the CC0 Warli thumbnail and checks JPEG signature. It has not been run successfully in this environment. Do not add other image binaries until underlying rights are checked.
+
+JavaScript parsed after edits. Browser loading, WebGL/CORS texture behavior, image fallback, and download helper execution are not verified. The previously published remote previews still require underlying rights review before final public launch. Figma image revisions and portrait reuse permission remain pending.
