@@ -52,21 +52,41 @@ function stopNarration(message="Narration stopped."){
  if(currentNarration){currentNarration.status.textContent=message;currentNarration=null}
 }
 function storyPlayer(record){
- const box=make("article",undefined,"story-player"),status=make("p","Ready to listen. The transcript is available below.","status");status.setAttribute("role","status");
- const rate=make("select");rate.setAttribute("aria-label","Narration speed");for(const speed of [.8,1,1.2]){const opt=make("option",speed+"×");opt.value=String(speed);if(speed===1)opt.selected=true;rate.append(opt)}
- const play=button("Play narration",()=>{
-  if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){status.textContent="Read-aloud is unavailable in this browser. Use the transcript.";return}
-  stopNarration();const token=++narrationToken,utterance=new SpeechSynthesisUtterance(record.story+" "+record.symbolism);utterance.lang="en-IN";utterance.rate=Number(rate.value);
-  currentNarration={status,utterance};status.textContent="Starting narration…";
-  utterance.onstart=()=>{if(token===narrationToken)status.textContent="Playing narration."};
+ const box=make("article",undefined,"story-player"),status=make("p","Listen to the narration or read the transcript.","status");
+ status.setAttribute("role","status");
+ const key=Object.keys(heritage).find(k=>heritage[k]===record);
+ const audio=make("audio");audio.controls=true;audio.setAttribute("controls","");audio.preload="metadata";audio.src="assets/audio/"+key+".mp3";audio.setAttribute("aria-label","Educational narration: "+record.storyTitle);
+ const rate=make("select");rate.setAttribute("aria-label","Narration speed");
+ for(const speed of [.8,1,1.2]){const opt=make("option",speed+"×");opt.value=String(speed);if(speed===1)opt.selected=true;rate.append(opt)}
+ rate.addEventListener("change",()=>{audio.playbackRate=Number(rate.value)});
+ function speakFallback(){
+  stopNarration();
+  if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){status.textContent="Read-aloud is unavailable. The transcript remains available.";return}
+  const token=++narrationToken,utterance=new SpeechSynthesisUtterance(record.story+" "+record.symbolism);
+  utterance.lang="en-IN";utterance.rate=Number(rate.value);currentNarration={status,utterance};
+  status.textContent="Starting browser read-aloud…";
+  utterance.onstart=()=>{if(token===narrationToken)status.textContent="Playing browser read-aloud."};
   utterance.onend=()=>{if(token===narrationToken){status.textContent="Narration finished.";currentNarration=null}};
-  utterance.onerror=()=>{if(token===narrationToken){status.textContent="Narration could not play. Read the transcript below.";currentNarration=null}};
+  utterance.onerror=()=>{if(token===narrationToken){status.textContent="Browser read-aloud is unavailable. Use the transcript.";currentNarration=null}};
   window.speechSynthesis.speak(utterance)
+ }
+ const play=button("Play narration",async()=>{
+  stopNarration();const token=++narrationToken;currentAudio=audio;audio.playbackRate=Number(rate.value);status.textContent="Loading narration…";
+  try{await audio.play();if(token===narrationToken)status.textContent="Playing narration."}catch(e){if(token===narrationToken){currentAudio=null;status.textContent="Audio unavailable. Try browser read-aloud below or read the transcript."}}
  });
- const pause=button("Pause / resume",()=>{if(currentNarration?.status!==status)return;const s=window.speechSynthesis;if(s.paused){s.resume();status.textContent="Playing narration."}else{s.pause();status.textContent="Narration paused."}});
- const stop=button("Stop",()=>{if(currentNarration?.status===status)stopNarration()});
+ const pause=button("Pause / resume",async()=>{
+  if(currentAudio===audio){if(audio.paused){try{await audio.play()}catch(e){status.textContent="Unable to resume audio."}}else audio.pause();return}
+  if(currentNarration?.status!==status)return;const s=window.speechSynthesis;if(s.paused){s.resume();status.textContent="Playing browser read-aloud."}else{s.pause();status.textContent="Narration paused."}
+ });
+ const stop=button("Stop",()=>{if(currentAudio===audio||currentNarration?.status===status){stopNarration();try{audio.currentTime=0}catch{}status.textContent="Narration stopped."}});
+ audio.addEventListener("play",()=>{if(currentAudio!==audio){stopNarration();currentAudio=audio}status.textContent="Playing narration."});
+ audio.addEventListener("pause",()=>{if(currentAudio===audio&&!audio.ended)status.textContent="Narration paused."});
+ audio.addEventListener("ended",()=>{if(currentAudio===audio)currentAudio=null;status.textContent="Narration finished."});
+ audio.addEventListener("error",()=>{if(currentAudio===audio)currentAudio=null;status.textContent="Audio unavailable. Try browser read-aloud below or read the transcript."});
  const transcript=make("details");transcript.open=true;transcript.append(make("summary","Transcript and spiritual context"),make("p",record.story),make("h4","Cultural symbolism"),make("p",record.symbolism),link("Narrative source",record.storySource));if(record.symbolSource)transcript.append(add(make("p"),link("Symbolism reference",record.symbolSource)));
- const key=Object.keys(heritage).find(k=>heritage[k]===record);const audio=make("audio");audio.controls=true;audio.preload="none";audio.src="assets/audio/"+key+".mp3";audio.setAttribute("aria-label","Recorded synthetic narration: "+record.storyTitle);audio.addEventListener("play",()=>{if(currentAudio!==audio){stopNarration();currentAudio=audio}status.textContent="Playing prepared synthetic narration."});audio.addEventListener("ended",()=>{if(currentAudio===audio)currentAudio=null;status.textContent="Narration finished."});audio.addEventListener("error",()=>{audio.hidden=true;status.textContent="Prepared audio unavailable. Use the read-aloud controls or transcript."});box.append(make("p",record.storyType,"eyebrow"),make("h3",record.storyTitle),make("p","Educational narration is synthetic, not an archival recording or a community performance.","note"),audio,make("p","Browser read-aloud alternative","note"),add(make("div",undefined,"actions"),play,pause,stop,rate),status,transcript);return box
+ const alternate=make("details");alternate.append(make("summary","Browser read-aloud alternative"),button("Read aloud",speakFallback));
+ box.append(make("p",record.storyType,"eyebrow"),make("h3",record.storyTitle),make("p","Synthetic educational narration; not an archival or community recording.","note"),audio,add(make("div",undefined,"actions"),play,pause,stop,rate),status,alternate,transcript);
+ return box
 }
 function provenanceCard(record){
  return add(make("section",undefined,"record-card"),make("h3","Artwork documentation"),make("p",record.title),make("p",record.archive),make("p",record.certification,"note"),link("View institutional record",record.record))
